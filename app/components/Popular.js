@@ -1,5 +1,25 @@
 import React from 'react'
 
+
+function LanguagesNav({ selected, onUpdateLanguage }) {
+    const languages = ['All', 'JavaScript', 'Ruby', 'Java', 'CSS', 'Python']
+
+    return (
+        <ul className='flex-center'>
+            {languages.map((language) => (
+                <li key={language}>
+                    <button
+                        className='btn-clear nav-link'
+                        style={language === selected ? { color: 'red' } : null}
+                        onClick={() => onUpdateLanguage(language)} >
+                        {language}
+                    </button>
+                </li>
+            ))}
+        </ul>
+    )
+}
+
 class Popular extends React.Component {
     constructor(props) {
         super(props);
@@ -16,31 +36,16 @@ class Popular extends React.Component {
         })
     }
 
-    //Updating state using a function setstate
-    // addFriend(newFriend) {
-    //     this.setState((state) => {
-    //       return {
-    //         friends: state.friends.concat(newFriend)
-    //       }
-    //     })
-    //   }
-
     render() {
-        const languages = ['All', 'JavaScript', 'Ruby', 'Java', 'CSS', 'Python']
+        const {selectedLanguage} = this.state
 
         return (
-            <ul className='flex-center'>
-                {languages.map((language) => (
-                    <li key={language}>
-                        <button 
-                        className='btn-clear nav-link' 
-                        style={language ===this.state.selectedLanguage ? {color: 'red'}: null}
-                        onClick={() => this._updateLanguage(language)} >
-                            {language}
-                        </button>
-                    </li>
-                ))}
-            </ul>
+            <React.Fragment>
+             <LanguagesNav 
+                selected={selectedLanguage}
+                onUpdateLanguage = {this._updateLanguage}
+             />
+            </React.Fragment>
         )
     }
 }

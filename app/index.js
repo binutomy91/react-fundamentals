@@ -4,9 +4,9 @@ import ReactDOM from "react-dom";
 import './index.css';
 
 var USER_DATA = {
-  name: 'Tyler McGinnis',
-  img: 'https://avatars0.githubusercontent.com/u/2933430?v=3&s=460',
-  username: 'tylermcginnis'
+  name: 'Binu tomy',
+  img: 'https://avatars3.githubusercontent.com/u/7398374?s=460&v=4',
+  username: 'binutomy91'
 }
 
 

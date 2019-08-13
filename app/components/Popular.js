@@ -16,6 +16,15 @@ class Popular extends React.Component {
         })
     }
 
+    //Updating state using a function setstate
+    // addFriend(newFriend) {
+    //     this.setState((state) => {
+    //       return {
+    //         friends: state.friends.concat(newFriend)
+    //       }
+    //     })
+    //   }
+
     render() {
         const languages = ['All', 'JavaScript', 'Ruby', 'Java', 'CSS', 'Python']
 

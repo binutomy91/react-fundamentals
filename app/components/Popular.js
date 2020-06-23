@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { fetchPopularRepos } from '../utlis/api'
 import {
   FaUser,
   FaStar,
@@ -7,7 +8,30 @@ import {
   FaExclamationTriangle
 } from 'react-icons/fa'
 
-import { fetchPopularRepos } from '../utlis/api'
+function LangaugesNav({ selected, onUpdateLanguage }) {
+  const languages = ['All', 'JavaScript', 'Ruby', 'Java', 'CSS', 'Python']
+
+  return (
+    <ul className="flex-center">
+      {languages.map((language) => (
+        <li key={language}>
+          <button
+            className="btn-clear nav-link"
+            style={language === selected ? { color: 'rgb(187, 46, 31)' } : null}
+            onClick={() => onUpdateLanguage(language)}
+          >
+            {language}
+          </button>
+        </li>
+      ))}
+    </ul>
+  )
+}
+
+LangaugesNav.propTypes = {
+  selected: PropTypes.string.isRequired,
+  onUpdateLanguage: PropTypes.func.isRequired
+}
 
 function ReposGrid({ repos }) {
   return (
@@ -65,32 +89,7 @@ ReposGrid.propTypes = {
   repos: PropTypes.array.isRequired
 }
 
-function LanguagesNav({ selected, onUpdateLanguage }) {
-  const languages = ['All', 'JavaScript', 'Ruby', 'Java', 'CSS', 'Python']
-
-  return (
-    <ul className="flex-center">
-      {languages.map((language) => (
-        <li key={language}>
-          <button
-            className="btn-clear nav-link"
-            style={language === selected ? { color: 'rgb(187, 46, 31)' } : null}
-            onClick={() => onUpdateLanguage(language)}
-          >
-            {language}
-          </button>
-        </li>
-      ))}
-    </ul>
-  )
-}
-
-LanguagesNav.propTypes = {
-  selected: PropTypes.string.isRequired,
-  onUpdateLanguage: PropTypes.func.isRequired
-}
-
-class Popular extends React.Component {
+export default class Popular extends React.Component {
   constructor(props) {
     super(props)
 
@@ -100,15 +99,13 @@ class Popular extends React.Component {
       error: null
     }
 
-    this._updateLanguage = this._updateLanguage.bind(this)
-    this._isLoading = this._isLoading.bind(this)
+    this.updateLanguage = this.updateLanguage.bind(this)
+    this.isLoading = this.isLoading.bind(this)
   }
-
   componentDidMount() {
-    this._updateLanguage(this.state.selectedLanguage)
+    this.updateLanguage(this.state.selectedLanguage)
   }
-
-  _updateLanguage(selectedLanguage) {
+  updateLanguage(selectedLanguage) {
     this.setState({
       selectedLanguage,
       error: null
@@ -133,24 +130,22 @@ class Popular extends React.Component {
         })
     }
   }
-
-  _isLoading() {
+  isLoading() {
     const { selectedLanguage, repos, error } = this.state
 
     return !repos[selectedLanguage] && error === null
   }
-
   render() {
     const { selectedLanguage, repos, error } = this.state
 
     return (
       <React.Fragment>
-        <LanguagesNav
+        <LangaugesNav
           selected={selectedLanguage}
-          onUpdateLanguage={this._updateLanguage}
+          onUpdateLanguage={this.updateLanguage}
         />
 
-        {this._isLoading() && <p>Loading</p>}
+        {this.isLoading() && <p>LOADING</p>}
 
         {error && <p>{error}</p>}
 
@@ -161,5 +156,3 @@ class Popular extends React.Component {
     )
   }
 }
-
-export default Popular

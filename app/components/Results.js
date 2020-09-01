@@ -1,9 +1,10 @@
 import React from 'react'
-import { battle } from '../utlis/api'
+import { battle } from '../utils/api'
 
 export default class Results extends React.Component {
   constructor(props) {
     super(props)
+
     this.state = {
       winner: null,
       loser: null,
@@ -13,6 +14,7 @@ export default class Results extends React.Component {
   }
   componentDidMount() {
     const { playerOne, playerTwo } = this.props
+
     battle([playerOne, playerTwo])
       .then((players) => {
         this.setState({
@@ -33,7 +35,7 @@ export default class Results extends React.Component {
     return (
       <div>
         Results
-        <pre>{JSON.stringify(this.props, null, 2)}</pre>
+        <pre>{JSON.stringify(this.state, null, 2)}</pre>
       </div>
     )
   }

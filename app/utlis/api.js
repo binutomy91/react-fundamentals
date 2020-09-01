@@ -1,24 +1,23 @@
-import { func } from 'prop-types'
-
 const id = 'YOUR_CLIENT_ID'
-const sec = 'YOUR_SECRET_KEY'
-
+const sec = 'YOUR_SECRET_ID'
 const params = `?client_id=${id}&client_secret=${sec}`
 
 function getErrorMsg(message, username) {
   if (message === 'Not Found') {
-    return `${username} doesnt exist`
+    return `${username} doesn't exist`
   }
+
   return message
 }
 
 function getProfile(username) {
-  return fetch(`https://github.com/users/${username}${params}`)
+  return fetch(`https://api.github.com/users/${username}${params}`)
     .then((res) => res.json())
     .then((profile) => {
       if (profile.message) {
         throw new Error(getErrorMsg(profile.message, username))
       }
+
       return profile
     })
 }
@@ -32,6 +31,8 @@ function getRepos(username) {
       if (repos.message) {
         throw new Error(getErrorMsg(repos.message, username))
       }
+
+      return repos
     })
 }
 
